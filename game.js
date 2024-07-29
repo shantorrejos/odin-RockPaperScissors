@@ -8,14 +8,22 @@ function getComputerChoice() {
     return computerChoice;
 };
 
+
 function getHumanChoice() {
-    let humanChoice = (prompt("Rock, Paper, or Scissors?")).toLowerCase();
-    console.log(humanChoice);
-    if (!(humanChoice === "rock" || humanChoice === "paper" || humanChoice === "scissors")) {
-        alert("Invalid Input, Try again")
+    let humanChoice = prompt("Rock, Paper, or Scissors?");
+
+    if (humanChoice === null){
+        alert("No input, Please try again.");
         getHumanChoice();
     } else {
-        return humanChoice;
+        humanChoice = humanChoice.toLowerCase();
+        if (!(humanChoice === "rock" || humanChoice === "paper" || humanChoice === "scissors")) {
+            alert("Invalid Input, Try again")
+            getHumanChoice();
+        }else {
+            console.log(humanChoice)
+            return humanChoice;
+        }
     }
 };
 
