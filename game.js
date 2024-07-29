@@ -14,8 +14,6 @@ function getHumanChoice() {
 function playRound(roundCounter) {
     let humanChoice = getHumanChoice();
     let computerChoice = getComputerChoice();
-    roundCounter += 1;
-
 
     if ((humanChoice === "Rock" && computerChoice === "Scissors")|| 
     (humanChoice === "Paper" && computerChoice === "Rock")||
@@ -23,7 +21,10 @@ function playRound(roundCounter) {
     ) {
         console.log(`You win Round ${roundCounter}!`)
         humanScore += 1;
-    } else {
+    } else if(humanChoice === computerChoice) {
+        alert("Tie... Again!");
+        playRound(roundCounter);
+    }else {
         console.log(`You lost Round ${roundCounter}!`)
         computerScore += 1;
     }
@@ -31,7 +32,7 @@ function playRound(roundCounter) {
 };
 
 function playGame() {
-    for (let i = 0; i < 4; i++) {
+    for (let i = 1; i < 6; i++) {
         playRound(i);
     }
     
@@ -43,15 +44,19 @@ function playGame() {
 
     let playAgain = confirm("Would you like to play again?")
 
-    if (playAgain = true) {
+
+    if (playAgain === 0) {
         playGame();
     } else {
         return;
     }
 };
 
-
 let humanScore = 0;
 let computerScore = 0;
+
+
+playGame();
+
 
 
