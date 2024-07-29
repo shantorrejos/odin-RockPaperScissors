@@ -27,10 +27,27 @@ function playRound(roundCounter) {
         console.log(`You lost Round ${roundCounter}!`)
         computerScore += 1;
     }
+    
 };
 
 function playGame() {
+    for (let i = 0; i < 4; i++) {
+        playRound(i);
+    }
+    
+    if (humanScore > computerScore) {
+        console.log("You win!")
+    } else{
+        console.log("Womp, womp. You lose!")
+    }
 
+    let playAgain = confirm("Would you like to play again?")
+
+    if (playAgain = true) {
+        playGame();
+    } else {
+        return;
+    }
 };
 
 
