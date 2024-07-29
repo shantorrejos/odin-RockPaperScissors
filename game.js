@@ -4,7 +4,6 @@ function getComputerChoice() {
         (randomInt === 1) ? "paper" :
         (randomInt === 2) ? "scissors" :
         console.log("Computer made an impossible choice")
-    console.log(computerChoice);
     return computerChoice;
 };
 
@@ -21,7 +20,6 @@ function getHumanChoice() {
             alert("Invalid Input, Try again")
             return getHumanChoice();
         }else {
-            console.log(humanChoice);
             return humanChoice;
         }
     }
@@ -29,8 +27,6 @@ function getHumanChoice() {
 
 function playRound(roundCounter) {
     let humanChoice = getHumanChoice();
-    console.log("code bleeds through")
-    console.log(humanChoice);
     let computerChoice = getComputerChoice();
 
 
@@ -40,16 +36,17 @@ function playRound(roundCounter) {
     (humanChoice === "paper" && computerChoice === "rock")||
     (humanChoice === "scissors" && computerChoice === "paper")
     ) {
-        console.log(`You win Round ${roundCounter}!`)
         humanScore += 1;
+        console.log(`Human: ${humanChoice} || Computer: ${computerChoice}`)
+        console.log(`You win Round ${roundCounter}!\nYour score: ${humanScore}\nPC score: ${computerScore}`)
+        
     } else if(humanChoice === computerChoice) {
         alert("Tie... Play again!");
         playRound(roundCounter);
     } else {
-        console.log(`You lost Round ${roundCounter}!`)
-        console.log(humanChoice)
-        console.log(computerChoice)
         computerScore += 1;
+        console.log(`Human: ${humanChoice} || Computer: ${computerChoice}`)
+        console.log(`You lost Round ${roundCounter}!\nYour score: ${humanScore}\nPC score: ${computerScore}`)   
     }
     
 };
@@ -61,15 +58,19 @@ function playGame() {
     
     if (humanScore > computerScore) {
         console.log("You win!")
+        console.log(`Your Score: ${humanScore} PC Score: ${computerScore}`)
     } else{
         console.log("Womp, womp. You lose!")
+        console.log(`Your Score: ${humanScore} PC Score: ${computerScore}`)
     }
 
     let playAgain = confirm("Would you like to play again?")
 
 
     if (playAgain === 0) {
-        playGame();
+        humanScore = 0;
+        computerScore = 0;
+        return playGame();
     } else {
         return;
     }
@@ -78,8 +79,4 @@ function playGame() {
 let humanScore = 0;
 let computerScore = 0;
 
-
 playGame();
-
-
-
