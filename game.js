@@ -12,16 +12,16 @@ function getComputerChoice() {
 function getHumanChoice() {
     let humanChoice = prompt("Rock, Paper, or Scissors?");
 
-    if (humanChoice === null){
+    if (humanChoice === null || humanChoice === undefined){
         alert("No input, Please try again.");
-        getHumanChoice();
+        return getHumanChoice();
     } else {
         humanChoice = humanChoice.toLowerCase();
         if (!(humanChoice === "rock" || humanChoice === "paper" || humanChoice === "scissors")) {
             alert("Invalid Input, Try again")
             getHumanChoice();
         }else {
-            console.log(humanChoice)
+            console.log(humanChoice);
             return humanChoice;
         }
     }
@@ -29,6 +29,8 @@ function getHumanChoice() {
 
 function playRound(roundCounter) {
     let humanChoice = getHumanChoice();
+    console.log("code bleeds through")
+    console.log(humanChoice);
     let computerChoice = getComputerChoice();
 
 
@@ -41,10 +43,12 @@ function playRound(roundCounter) {
         console.log(`You win Round ${roundCounter}!`)
         humanScore += 1;
     } else if(humanChoice === computerChoice) {
-        alert("Tie... Again!");
+        alert("Tie... Play again!");
         playRound(roundCounter);
     } else {
         console.log(`You lost Round ${roundCounter}!`)
+        console.log(humanChoice)
+        console.log(computerChoice)
         computerScore += 1;
     }
     
