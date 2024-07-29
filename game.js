@@ -19,7 +19,7 @@ function getHumanChoice() {
         humanChoice = humanChoice.toLowerCase();
         if (!(humanChoice === "rock" || humanChoice === "paper" || humanChoice === "scissors")) {
             alert("Invalid Input, Try again")
-            getHumanChoice();
+            return getHumanChoice();
         }else {
             console.log(humanChoice);
             return humanChoice;
