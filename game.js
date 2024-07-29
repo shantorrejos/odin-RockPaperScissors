@@ -1,30 +1,41 @@
 function getComputerChoice() {
     let randomInt = Math.floor(Math.random() * 3);
-    let computerChoice = (randomInt === 0) ? "Rock" :
-        (randomInt === 1) ? "Paper" :
-        (randomInt === 2) ? "Scissors" :
+    let computerChoice = (randomInt === 0) ? "rock" :
+        (randomInt === 1) ? "paper" :
+        (randomInt === 2) ? "scissors" :
         console.log("Computer made an impossible choice")
+    console.log(computerChoice);
     return computerChoice;
 };
 
 function getHumanChoice() {
-    return prompt("Rock, Paper, or Scissors?");
+    let humanChoice = (prompt("Rock, Paper, or Scissors?")).toLowerCase();
+    console.log(humanChoice);
+    if (!(humanChoice === "rock" || humanChoice === "paper" || humanChoice === "scissors")) {
+        alert("Invalid Input, Try again")
+        getHumanChoice();
+    } else {
+        return humanChoice;
+    }
 };
 
 function playRound(roundCounter) {
     let humanChoice = getHumanChoice();
     let computerChoice = getComputerChoice();
 
-    if ((humanChoice === "Rock" && computerChoice === "Scissors")|| 
-    (humanChoice === "Paper" && computerChoice === "Rock")||
-    (humanChoice === "Scissors" && computerChoice === "Paper")
+
+    // TODO: Optimize code, if statements should be in reverse order
+
+    if ((humanChoice === "rock" && computerChoice === "scissors")|| 
+    (humanChoice === "paper" && computerChoice === "rock")||
+    (humanChoice === "scissors" && computerChoice === "paper")
     ) {
         console.log(`You win Round ${roundCounter}!`)
         humanScore += 1;
     } else if(humanChoice === computerChoice) {
         alert("Tie... Again!");
         playRound(roundCounter);
-    }else {
+    } else {
         console.log(`You lost Round ${roundCounter}!`)
         computerScore += 1;
     }
