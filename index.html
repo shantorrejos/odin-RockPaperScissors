@@ -11,25 +11,35 @@
     <div class="game container">
         <div class="hero">
             <img src="./images/hero.png" class="icon hero">
-            <div class="hero-hitpoints"></div>
+            <div class="hero-hitpoints">
+                <div class="hero-health"></div>
+            </div>
             <p>you</p>
         </div>
 
         <div class="display">
-            <p class="round-result">result</p>
-            <p class="round-flavor">flavor</p>
+            <p class="round-result"></p>
+            <p class="round-flavor"></p>
         </div>
 
         <div class="nemesis">
             <img src="./images/alien.png" class="icon nemesis">
-            <div class="nemesis-hitpoints"></div>
+            <div class="nemesis-hitpoints">
+                <div class="nemesis-health"></div>
+                <div class="nemesis-dmg"></div>
+            </div>
             <p>computer</p>
         </div>
     </div>
-    <div class="action container">
-        <img class="icon-choice rock" src="./images/hand-fist.svg">
-        <img class="icon-choice paper" src="./images/hand-paper.svg">
-        <img class="icon-choice scissors" src="./images/hand-peace.svg">
+    <div class="action-container">
+        <img class="icon-choice rock" id="rock" src="./images/hand-fist.svg">
+        <img class="icon-choice paper" id="paper" src="./images/hand-paper.svg">
+        <img class="icon-choice scissors" id="scissors" src="./images/hand-peace.svg">
     </div>
+    <div class="reset">
+        reset
+    </div>
+    </div>
+    <script src="./game.js"></script>
 </body>
 </html>

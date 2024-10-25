@@ -7,26 +7,33 @@ function getComputerChoice() {
     return computerChoice;
 };
 
-
 function getHumanChoice() {
-    let humanChoice = prompt("Rock, Paper, or Scissors?");
+    return new Promise ((resolve) => {
+    
+        playerChoice.addEventListener('click', (event) =>{
+            let target = event.target;
+            let humanChoice = '';
 
-    if (humanChoice === null || humanChoice === undefined){
-        alert("No input, Please try again.");
-        return getHumanChoice();
-    } else {
-        humanChoice = humanChoice.toLowerCase();
-        if (!(humanChoice === "rock" || humanChoice === "paper" || humanChoice === "scissors")) {
-            alert("Invalid Input, Try again")
-            return getHumanChoice();
-        }else {
-            return humanChoice;
-        }
-    }
+            switch (target.id) {
+                case 'rock':
+                    humanChoice = 'rock'
+                    break;
+                case 'paper':
+                    humanChoice = 'paper'
+                    break;
+                case 'scissors':
+                    humanChoice = 'scissors'
+                    break;
+                default:
+                    break;
+            }
+            resolve(humanChoice);
+        }, { once: true });
+    });
 };
 
-function playRound(roundCounter) {
-    let humanChoice = getHumanChoice();
+async function playRound() {
+    let humanChoice = await getHumanChoice();
     let computerChoice = getComputerChoice();
 
 
@@ -36,47 +43,111 @@ function playRound(roundCounter) {
     (humanChoice === "paper" && computerChoice === "rock")||
     (humanChoice === "scissors" && computerChoice === "paper")
     ) {
-        humanScore += 1;
-        console.log(`Human: ${humanChoice} || Computer: ${computerChoice}`)
-        console.log(`You win Round ${roundCounter}!\nYour score: ${humanScore}\nPC score: ${computerScore}`)
+        updateDisplay('Player', 'Nemesis', humanChoice, computerChoice);
+        return 'win'
         
     } else if(humanChoice === computerChoice) {
-        alert("Tie... Play again!");
-        playRound(roundCounter);
+        updateDisplay('Player', 'Nemesis', humanChoice, 0);
+        return 'tie';
     } else {
-        computerScore += 1;
-        console.log(`Human: ${humanChoice} || Computer: ${computerChoice}`)
-        console.log(`You lost Round ${roundCounter}!\nYour score: ${humanScore}\nPC score: ${computerScore}`)   
+        updateDisplay('Nemesis', 'Player', computerChoice, humanChoice);
+        return 'lose';
     }
     
 };
 
-function playGame() {
-    for (let i = 1; i < 6; i++) {
-        playRound(i);
+function updateDisplay(winner, loser, winningChoice, losingChoice){
+    if (losingChoice === 0) {
+        round_result.textContent = `Both ${winner} and ${loser} chose ${winningChoice}`
+        round_flavor.textContent = `No attack connected!`
+    } else {
+        round_result.textContent = `${winner}'s ${winningChoice} beats ${loser}'s ${losingChoice}`
+        round_flavor.textContent = `${winner} strikes ${loser} for 20 damage!`
     }
-    
-    if (humanScore > computerScore) {
-        console.log("You win!")
-        console.log(`Your Score: ${humanScore} PC Score: ${computerScore}`)
+}
+
+function updateVictor(winner, loser){
+        round_result.textContent = `${winner} deals the killing blow`
+        round_flavor.textContent = `${loser} slain!`
+}
+
+function shakeIcon(player){
+    if (player === 0) {
+        nemesisHealthBar.style.width = nemesisHP + '%';
+        nemesis_icon.classList.add('shake')
+        setTimeout(() => {
+            nemesis_icon.classList.remove('shake');
+        }, 500);
+    } else {
+        heroHealthBar.style.width = nemesisHP + '%';
+        hero_icon.classList.add('shake')
+        setTimeout(() => {
+            hero_icon.classList.remove('shake');
+        }, 500);
+    }
+}
+
+async function playGame() {
+
+    while (!(heroHP === 0) && !(nemesisHP === 0)) {
+        const result = await playRound();
+        if (result === 'win'){
+            nemesisHP -= 20;
+            nemesisHealthBar.style.width = nemesisHP + '%';
+            shakeIcon(0);
+        } else if (result === 'lose') {
+            heroHP -= 20;
+            heroHealthBar.style.width = heroHP + '%';
+            shakeIcon(1);
+        }
+    }
+
+    if (heroHP > nemesisHP) {
+        updateVictor('Player', 'Nemesis');
     } else{
-        console.log("Womp, womp. You lose!")
-        console.log(`Your Score: ${humanScore} PC Score: ${computerScore}`)
+        updateVictor('Nemesis', 'Player');
     }
 
-    let playAgain = confirm("Would you like to play again?")
-
-
-    if (playAgain === 0) {
-        humanScore = 0;
-        computerScore = 0;
-        return playGame();
-    } else {
-        return;
-    }
+    resetBtn.style.visibility = 'visible';
 };
 
-let humanScore = 0;
-let computerScore = 0;
+function resetGame() {
+    heroHP = 100;
+    nemesisHP = 100;
+    round_flavor.textContent = '';
+    round_result.textContent = '';
+    heroHealthBar.style.width = heroHP + '%';
+    nemesisHealthBar.style.width = nemesisHP + '%';
+    resetBtn.style.visibility = 'hidden';
+    document.addEventListener('DOMContentLoaded',() => {
+        playGame();
+    });
+    
+}
 
-playGame();
+const playerChoice = document.querySelector(".action-container");
+const heroHealthBar = document.querySelector('.hero-health');
+const nemesisHealthBar = document.querySelector('.nemesis-health');
+const resetBtn = document.querySelector('.reset');
+
+const round_result = document.querySelector('.round-result');
+const round_flavor = document.querySelector('.round-flavor');
+
+const nemesis_icon = document.querySelector('.icon.nemesis');
+const hero_icon = document.querySelector('.icon.hero');
+
+console.log(playerChoice);
+let heroHP = 100;
+let nemesisHP = 100;
+
+
+document.addEventListener('DOMContentLoaded',() => {
+    playGame();
+});
+
+resetBtn.addEventListener('click', () => {
+    resetGame();
+});
+
+
+
