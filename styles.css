@@ -3,5 +3,65 @@
 
 * {
     background-color: white;
+    font-family: 'Bubbler One';
 }
 
+.title {
+    font-size: 96px;
+    text-align: center;
+    margin: 80px 0px;
+}
+
+.game.container {
+    display: flex;
+    justify-content: center;
+}
+
+.hero, .nemesis{
+    text-align: center;
+}
+
+.icon.hero {
+    width: 202px;
+    height: 156px;
+}
+
+.icon.nemesis {
+    width: 125px;
+    height: 158px;
+}
+
+.hero-hitpoints{
+    width: 250px;
+    height: 30px;
+    background-color: #14F000;
+}
+
+.nemesis-hitpoints{
+    width: 250px;
+    height: 30px;
+    background-color: #BB84FF;
+}
+
+.display {
+    width: 500px;
+    margin: 0;
+    text-align: center;
+}
+
+.action.container {
+    display: flex;
+    justify-content: center;
+    gap: 50px;
+}
+
+.icon-choice{
+    width: 88px;
+    height: 88px;
+    transition: transform 0.1s ease;
+}
+
+.icon-choice:hover{
+    transform: scale(1.2);
+    cursor: pointer;
+}
